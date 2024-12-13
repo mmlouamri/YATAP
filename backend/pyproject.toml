@@ -1,0 +1,33 @@
+[project]
+name = "app"
+version = "0.1.0"
+description = ""
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "argon2-cffi>=23.1.0",
+    "fastapi[standard]>=0.115.0",
+    "psutil>=6.1.0",
+    "pydantic-settings>=2.5.2",
+    "pyjwt>=2.10.1",
+    "python-multipart>=0.0.10",
+    "tortoise-orm",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.13.0",
+    "pytest-asyncio>=0.25.0",
+    "pytest>=8.3.4",
+    "pytest-mock>=3.14.0",
+    "ruff>=0.8.2",
+    "coverage>=7.6.9",
+    "types-psutil>=6.1.0.20241102",
+]
+
+[tool.uv.sources]
+tortoise-orm = { git = "https://github.com/mmlouamri/tortoise-orm" }
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
