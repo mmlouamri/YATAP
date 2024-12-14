@@ -1,6 +1,4 @@
 from datetime import datetime, timezone
-import uuid
-from pydantic import BaseModel
 from tortoise import Model, fields
 
 
@@ -18,8 +16,7 @@ class BaseTortoiseModel(Model):
             self.updated_at = datetime.now(timezone.utc)
         await super().save(*args, **kwargs)
 
+    class Meta:
+        abstract = True
 
-class BasePydanticModel(BaseModel):  # Refactor
-    id: uuid.UUID
-    created_at: datetime
-    updated_at: datetime
+
