@@ -13,7 +13,7 @@ def custom_generate_unique_id(route: APIRoute) -> str:
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await tortoise_init(config.DATABASE_URL, generate_schemas=True)
+    await tortoise_init()
     yield
     await tortoise_close()
 

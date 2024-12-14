@@ -1,14 +1,30 @@
 from tortoise import Tortoise
 
+from app.config import config
 
-async def tortoise_init(db_url: str, generate_schemas: bool = False):
+TORTOISE_ORM = {
+    "connections": {
+        "default": config.DATABASE_URL,
+    },
+    "apps": {
+        "models": {
+            "models": [
+                "app.core.auth.models", 
+                "app.core.users.models",
+                "aerich.models"
+                ],
+            "default_connection": "default",
+        },
+    },
+}
+
+
+async def tortoise_init():
     await Tortoise.init(
-        db_url=db_url,
-        modules={"models": ["app.core.auth.models", "app.core.users.models"]},
+        db_url=TORTOISE_ORM.get("connections").get("default"),
+        # modules={"models": ["app.core.auth.models", "app.core.users.models"]},
+        modules=TORTOISE_ORM.get("apps").get("models"),
     )
-
-    if generate_schemas:
-        await Tortoise.generate_schemas()
 
 
 async def tortoise_close():
