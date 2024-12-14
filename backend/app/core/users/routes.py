@@ -2,9 +2,9 @@ from typing import Annotated
 import uuid
 from fastapi import APIRouter, Depends, HTTPException, Response, status
 
-from app.core.auth.dependencies import get_current_user
 from app.core.users.models import UserDB
 from app.core.users.schemas import UserSchema, UserUpdateSchema, UsersSchema
+from app.core.auth.dependencies import UserDep
 
 
 router = APIRouter(prefix="/users", tags=["user"])
@@ -30,7 +30,7 @@ async def show(user_id: uuid.UUID):
 async def update(
     user_id: uuid.UUID,
     update_data: UserUpdateSchema,
-    cuser: Annotated[UserSchema, Depends(get_current_user)],
+    cuser: UserDep
 ):
     user = await UserDB.get_or_none(id=user_id)
     if not user:
@@ -47,7 +47,7 @@ async def update(
 
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
 async def destroy(
-    user_id: uuid.UUID, cuser: Annotated[UserSchema, Depends(get_current_user)]
+    user_id: uuid.UUID, cuser: UserDep
 ):
     user = await UserDB.get_or_none(id=user_id)
 
