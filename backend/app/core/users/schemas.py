@@ -1,6 +1,6 @@
 from datetime import datetime
 from pydantic import BaseModel, EmailStr
-from app.lib.base_models import BasePydanticModel
+from app.lib.base_schemas import BasePydanticModel
 
 
 class UserSchema(BasePydanticModel):
