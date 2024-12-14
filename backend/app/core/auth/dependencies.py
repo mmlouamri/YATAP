@@ -29,3 +29,5 @@ async def get_current_user(token: str = Depends(oauth2_scheme)) -> UserDB:
     if user is None:
         raise credentials_exception
     return user
+
+UserDep = Annotated[UserDB, Depends(get_current_user)]
