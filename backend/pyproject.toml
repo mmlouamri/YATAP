@@ -11,7 +11,7 @@ dependencies = [
     "pydantic-settings>=2.5.2",
     "pyjwt>=2.10.1",
     "python-multipart>=0.0.10",
-    "tortoise-orm",
+    "tortoise-orm>=0.22.2",
 ]
 
 [dependency-groups]
@@ -24,9 +24,6 @@ dev = [
     "coverage>=7.6.9",
     "types-psutil>=6.1.0.20241102",
 ]
-
-[tool.uv.sources]
-tortoise-orm = { git = "https://github.com/mmlouamri/tortoise-orm" }
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
