@@ -9,21 +9,22 @@ TORTOISE_ORM = {
     "apps": {
         "models": {
             "models": [
-                "app.core.auth.models", 
+                "app.core.auth.models",
                 "app.core.users.models",
-                "aerich.models"
-                ],
+                "app.features.todos.models",
+                "aerich.models",
+            ],
             "default_connection": "default",
         },
     },
 }
 
+print(TORTOISE_ORM.get("apps").get("models").get("models"))
 
 async def tortoise_init():
     await Tortoise.init(
         db_url=TORTOISE_ORM.get("connections").get("default"),
-        # modules={"models": ["app.core.auth.models", "app.core.users.models"]},
-        modules=TORTOISE_ORM.get("apps").get("models"),
+        modules={"models": TORTOISE_ORM.get("apps").get("models").get("models")},
     )
 
 

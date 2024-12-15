@@ -20,4 +20,4 @@ class Config(BaseSettings):
     PASSWORD_RESET_EXPIRE_MINUTES: int
 
 
-config = Config() # type: ignore
+config = Config()  # type: ignore

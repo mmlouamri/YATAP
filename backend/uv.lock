@@ -55,7 +55,7 @@ wheels = [
 [[package]]
 name = "app"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "aerich" },
     { name = "argon2-cffi" },

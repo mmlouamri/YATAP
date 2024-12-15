@@ -1,6 +1,5 @@
-from typing import Annotated
 import uuid
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from fastapi import APIRouter, HTTPException, Response, status
 
 from app.core.users.models import UserDB
 from app.core.users.schemas import UserSchema, UserUpdateSchema, UsersSchema
@@ -27,11 +26,7 @@ async def show(user_id: uuid.UUID):
 
 
 @router.put("/{user_id}", response_model=UserSchema)
-async def update(
-    user_id: uuid.UUID,
-    update_data: UserUpdateSchema,
-    cuser: UserDep
-):
+async def update(user_id: uuid.UUID, update_data: UserUpdateSchema, cuser: UserDep):
     user = await UserDB.get_or_none(id=user_id)
     if not user:
         raise HTTPException(
@@ -42,13 +37,12 @@ async def update(
             status_code=status.HTTP_403_FORBIDDEN, detail="You can't update other users"
         )
     user = await user.update_from_dict(update_data.model_dump(exclude_unset=True))
+    await user.save()
     return user
 
 
 @router.delete("/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
-async def destroy(
-    user_id: uuid.UUID, cuser: UserDep
-):
+async def destroy(user_id: uuid.UUID, cuser: UserDep):
     user = await UserDB.get_or_none(id=user_id)
 
     if not user:

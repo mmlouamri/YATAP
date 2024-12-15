@@ -18,5 +18,3 @@ class BaseTortoiseModel(Model):
 
     class Meta:
         abstract = True
-
-
