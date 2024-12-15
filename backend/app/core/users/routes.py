@@ -1,16 +1,17 @@
 from typing import Annotated
 import uuid
-from fastapi import APIRouter, Depends, HTTPException, Response, status
+from backend.app.lib.base_schemas import IndexSchema
+from fastapi import APIRouter, HTTPException, Response, status
 
 from app.core.users.models import UserDB
-from app.core.users.schemas import UserSchema, UserUpdateSchema, UsersSchema
+from app.core.users.schemas import UserSchema, UserUpdateSchema
 from app.core.auth.dependencies import UserDep
 
 
 router = APIRouter(prefix="/users", tags=["user"])
 
 
-@router.get("/", response_model=UsersSchema)
+@router.get("/", response_model=IndexSchema[UserSchema])
 async def index(offset: int = 0, limit: int = 10):
     users = await UserDB.all().order_by("-created_at").offset(offset).limit(limit)
     return {"data": users, "count": len(users)}

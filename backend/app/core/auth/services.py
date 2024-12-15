@@ -14,7 +14,6 @@ from argon2 import PasswordHasher
 
 async def authenticate_user(email: str, password: str) -> UserDB:
     user = await UserDB.get_or_none(email=email)
-    print("User", user)
     if not user:
         raise UserDoesNotExistException()
 
