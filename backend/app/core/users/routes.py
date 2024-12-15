@@ -42,6 +42,7 @@ async def update(
             status_code=status.HTTP_403_FORBIDDEN, detail="You can't update other users"
         )
     user = await user.update_from_dict(update_data.model_dump(exclude_unset=True))
+    await user.save()
     return user
 
 
