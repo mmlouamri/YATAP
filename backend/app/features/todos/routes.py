@@ -1,13 +1,14 @@
 import uuid
+from app.lib.base_schemas import IndexSchema
 from fastapi import APIRouter, HTTPException, Response, status
 from app.core.auth.dependencies import UserDep
 from app.features.todos.models import TodoDB
-from app.features.todos.schemas import TodoSchema, TodoCreateSchema, TodoUpdateSchema, TodosSchema
+from app.features.todos.schemas import TodoSchema, TodoCreateSchema, TodoUpdateSchema
 
 router = APIRouter(prefix="/todos", tags=["todos"])
 
 
-@router.get("/", response_model=TodosSchema)
+@router.get("/", response_model=IndexSchema[TodoSchema])
 async def index(user: UserDep, offset: int = 0, limit: int = 10):
     todos = (
         await TodoDB.filter(owner=user)
@@ -29,7 +30,7 @@ async def show(todo_id: uuid.UUID, user: UserDep):
     return todo
 
 
-@router.post("/", response_model=TodoSchema)
+@router.post("/", response_model=TodoSchema, status_code=status.HTTP_201_CREATED)
 async def store(todo: TodoCreateSchema, user: UserDep):
     created_todo = await TodoDB.create(**todo.model_dump(), owner=user)
     return created_todo

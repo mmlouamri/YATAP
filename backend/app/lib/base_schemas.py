@@ -4,17 +4,14 @@ from typing import Generic, TypeVar
 from pydantic import BaseModel
 
 
-class BasePydanticModel(BaseModel):
+class BaseSchema(BaseModel):
     id: uuid.UUID
     created_at: datetime
     updated_at: datetime
 
+T = TypeVar('DynamicType', bound=BaseSchema)
 
 
-# Define a generic type variable
-DynamicType = TypeVar('DynamicType')
-
-# Define a generic class using the dynamic type
-class ClassNameWhatever(BaseModel, Generic[DynamicType]):
-    data: list[DynamicType]
+class IndexSchema(BaseModel, Generic[T]):
+    data: list[T]
     count: int

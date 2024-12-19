@@ -19,12 +19,11 @@ TORTOISE_ORM = {
     },
 }
 
-print(TORTOISE_ORM.get("apps").get("models").get("models"))
-
 async def tortoise_init():
     await Tortoise.init(
         db_url=TORTOISE_ORM.get("connections").get("default"),
         modules={"models": TORTOISE_ORM.get("apps").get("models").get("models")},
+
     )
 
 

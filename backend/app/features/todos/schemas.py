@@ -1,19 +1,15 @@
 import uuid
 
 from pydantic import BaseModel
-from app.lib.base_schemas import BasePydanticModel
+from app.lib.base_schemas import BaseSchema
 
 
-class TodoSchema(BasePydanticModel):
+class TodoSchema(BaseSchema):
     title: str
     description: str
     is_done: bool
     owner_id: uuid.UUID
 
-
-class TodosSchema(BaseModel):
-    data: list[TodoSchema]
-    count: int
 
 
 class TodoCreateSchema(BaseModel):
